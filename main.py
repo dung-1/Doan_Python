@@ -563,9 +563,28 @@ def calculate_definite_integral():
 def main():
     while True:
         try:
-            print("Chọn bài tập (1-15), hoặc nhập 0 để thoát:")
-            choice = int(input())
-
+            print("_______________________________________________________|")
+            print("|                      MENU BÀI TẬP                    |")
+            print("|______________________________________________________|")
+            print("|1.  Viết chương trình chuyển đổi nhiệt độ             |")
+            print("|2.  Tính tổng số nguyên tố, tổng ước số, tổng số chẵn |")
+            print("|3.  Xử lý hàm số                                      |")
+            print("|4.  Tạo dãy số và ước số chung lớn nhất               |")
+            print("|5.  Kiểm tra xâu và chèn xâu vào xâu khác             |")
+            print("|6.  Sinh tập hợp ngẫu nhiên                           |")
+            print("|7.  Xử lý từ điển                                     |")
+            print("|8.  Sử dụng module và phép toán cơ bản                |")
+            print("|9.  Đọc và ghi tệp                                    |")
+            print("|10. Xử lý ngoại lệ                                    |")
+            print("|11. Xử lý đối tượng                                   |")
+            print("|12. Sử dụng thư viện NumPy                            |")
+            print("|13. Vẽ đồ thị đạo hàm                                 |")
+            print("|14. Vẽ các hình không gian                            |")
+            print("|15. Sử dụng thư viện SymPy                            |")
+            print("|______________________________________________________|")
+            print("|0.  Thoát chương trình                                |")
+            print("|______________________________________________________|")
+            choice = int(input("Chọn bài tập (0-15):"))
             if choice == 0:
                 print("Kết thúc chương trình.")
                 break
