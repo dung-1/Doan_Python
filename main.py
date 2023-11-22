@@ -1,39 +1,85 @@
-import random
-import math
 import numpy as np
 import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
 import sympy as sp
+from tabulate import tabulate
+from sinhvien import *
 
 
 # Bài 1: Chuyển đổi nhiệt độ từ Celsius sang Fahrenheit
-def celsius_to_fahrenheit():
+
+
+def chuyen_do_Celsius_sang_Fahrenheit():
     try:
-        celsius = float(input("Nhập nhiệt độ Celsius: "))
-        fahrenheit = celsius * 9 / 5 + 32
-        print(f"Nhiệt độ Fahrenheit tương ứng: {fahrenheit}")
+        do_Celsius = float(input("Nhập nhiệt độ Celsius: "))
+        do_Fahrenheit = do_Celsius * 9 / 5 + 32
+        # Tạo bảng kết quả
+        bang_ket_qua = [["Nhiệt độ Celsius", "Nhiệt độ Fahrenheit"],
+                        [do_Celsius, do_Fahrenheit]]
+
+        # In ra kết quả trong bảng
+        print(tabulate(bang_ket_qua, headers="firstrow", tablefmt="pretty"))
+
     except ValueError:
         print("Lỗi: Vui lòng nhập một số hợp lệ.")
 
 
+def main_bai_1():
+    print("Chào mừng bạn đến với chương trình của tôi!")
+
+    hien_thi_bang_lua_chon()
+
+    choice = int(input("Nhập lựa chọn của bạn: "))
+
+    if choice == 1:
+        chuyen_do_Celsius_sang_Fahrenheit()
+    elif choice == 2:
+        print("Kết thúc chương trình.")
+    else:
+        print("Lựa chọn không hợp lệ.")
+
+
 # Bài 2: Tính tổng số nguyên tố, tổng ước số, và tổng số chẵn
-def calculate_values_for_n(n):
+def la_so_nguyen_to(x):
+    if x < 2:
+        return False
+    for i in range(2, int(x ** 0.5) + 1):
+        if x % i == 0:
+            return False
+    return True
+
+
+def tong_so_nguyen_to_nho_hon_n(n):
+    so_nguyen_to_nho_hon_n = [i for i in range(2, n) if la_so_nguyen_to(i)]
+    return sum(so_nguyen_to_nho_hon_n)
+
+
+def tinh_gia_tri_cho_n(n):
     try:
         if not isinstance(n, int):
             raise ValueError("Nhập không phải là số nguyên.")
 
-        if n < 2:
-            raise ValueError("Nhập số tự nhiên n phải lớn hơn hoặc bằng 2.")
+        if not (50 <= n <= 150):
+            raise ValueError("Nhập số tự nhiên n phải lớn hơn hoặc bằng 50 và nhỏ hơn hoặc bằng 150.")
 
-        prime_sum = sum([i for i in range(n) if is_prime(i)])
-        divisor_sum = sum([i for i in range(1, n + 1) if n % i == 0])
-        even_sum_for = sum([i for i in range(2, n + 1, 2)])
-        even_sum_while = 0
+        tong_so_nguyen_to = tong_so_nguyen_to_nho_hon_n(n)
+        tong_ươc_so = sum([i for i in range(1, n + 1) if n % i == 0])
+        tong_so_chan_for = sum([i for i in range(2, n + 1, 2)])
+        tong_so_chan_while = 0
         i = 2
         while i <= n:
-            even_sum_while += i
+            tong_so_chan_while += i
             i += 2
-        return prime_sum, divisor_sum, even_sum_for, even_sum_while
+
+        print(f"Các số nguyên tố nhỏ hơn {n}: {[i for i in range(2, n) if la_so_nguyen_to(i)]}")
+
+        # Tạo bảng kết quả
+        bang_ket_qua = [["Tổng số nguyên tố", "Tổng ước số", "Tổng số chẵn (for)", "Tổng số chẵn (while)"],
+                        [tong_so_nguyen_to, tong_ươc_so, tong_so_chan_for, tong_so_chan_while]]
+
+        # In ra kết quả trong bảng
+        print(tabulate(bang_ket_qua, headers="firstrow", tablefmt="pretty"))
+
+        return tong_so_nguyen_to, tong_ươc_so, tong_so_chan_for, tong_so_chan_while
 
     except ValueError as ve:
         print(f"Lỗi: {ve}")
@@ -43,8 +89,36 @@ def calculate_values_for_n(n):
         return None
 
 
+def hambai2():
+    while True:
+        try:
+            n = int(input("Nhập một số tự nhiên n (50 <= n <= 150): "))
+            if 50 <= n <= 150:
+                tinh_gia_tri_cho_n(n)
+                break  # Thoát khỏi vòng lặp khi đã nhập đúng
+            else:
+                print("Số n không nằm trong khoảng [50, 150].")
+        except ValueError:
+            print("Lỗi: Vui lòng nhập một số tự nhiên.")
+
+
+def main_bai_2():
+    print("Chào mừng bạn đến với chương trình của tôi!")
+
+    hien_thi_bang_lua_chon()
+
+    choice = int(input("Nhập lựa chọn của bạn: "))
+
+    if choice == 1:
+        hambai2()
+    elif choice == 2:
+        print("Kết thúc chương trình.")
+    else:
+        print("Lựa chọn không hợp lệ.")
+
+
 # Bài 3: Các hàm số
-def count_divisors(n):
+def dem_uoc_so(n):
     try:
         if not isinstance(n, int):
             raise ValueError("Lỗi: Vui lòng nhập một số tự nhiên.")
@@ -59,7 +133,7 @@ def count_divisors(n):
         return None
 
 
-def is_prime(n):
+def la_so_nguyen_to(n):
     try:
         if not isinstance(n, int):
             raise ValueError("Lỗi: Vui lòng nhập một số tự nhiên.")
@@ -78,7 +152,7 @@ def is_prime(n):
         return None
 
 
-def count_odd_divisors(n):
+def dem_uoc_le(n):
     try:
         if not isinstance(n, int):
             raise ValueError("Lỗi: Vui lòng nhập một số tự nhiên.")
@@ -93,7 +167,7 @@ def count_odd_divisors(n):
         return None
 
 
-def count_primes_below_n(n):
+def dem_so_nguyen_to_duoi_n(n):
     try:
         if not isinstance(n, int):
             raise ValueError("Lỗi: Vui lòng nhập một số tự nhiên.")
@@ -101,14 +175,14 @@ def count_primes_below_n(n):
         if n < 2:
             return 0
 
-        return len([i for i in range(2, n) if is_prime(i)])
+        return len([i for i in range(2, n) if la_so_nguyen_to(i)])
 
     except ValueError as ve:
         print(ve)
         return None
 
 
-def sum_divisors(n):
+def tong_uoc_so(n):
     try:
         if not isinstance(n, int):
             raise ValueError("Lỗi: Vui lòng nhập một số tự nhiên.")
@@ -123,23 +197,42 @@ def sum_divisors(n):
         return None
 
 
-def main_bai_3():
+def hambai3():
     try:
         n = int(input("Nhập một số tự nhiên n (50 <= n <= 150): "))
         if 50 <= n <= 150:
-            print(f"Số ước số thực sự của {n}: {count_divisors(n)}")
-            print(f"{n} {'là' if is_prime(n) else 'không phải'} số nguyên tố")
-            print(f"Số ước số lẻ của {n}: {count_odd_divisors(n)}")
-            print(f"Số nguyên tố nhỏ hơn {n}: {count_primes_below_n(n)}")
-            print(f"Tổng các ước số thực sự của {n}: {sum_divisors(n)}")
+            # Tạo bảng kết quả
+            bang_ket_qua = [
+                ["Số các ước số thực sự", f"{n} {'là' if la_so_nguyen_to(n) else 'không phải'} số nguyên tố",
+                 "Số ước số lẻ", "Số nguyên tố nhỏ hơn n", "Tổng ước số thực sự"],
+                [dem_uoc_so(n), la_so_nguyen_to(n), dem_uoc_le(n), dem_so_nguyen_to_duoi_n(n), tong_uoc_so(n)]
+            ]
+
+            # In ra kết quả trong bảng
+            print(tabulate(bang_ket_qua, headers="firstrow", tablefmt="pretty"))
         else:
             print("Số n không nằm trong khoảng [50, 150]")
     except ValueError as ve:
         print(f"Lỗi: {ve}")
 
 
+def main_bai_3():
+    print("Chào mừng bạn đến với chương trình của tôi!")
+
+    hien_thi_bang_lua_chon()
+
+    choice = int(input("Nhập lựa chọn của bạn: "))
+
+    if choice == 1:
+        hambai3()
+    elif choice == 2:
+        print("Kết thúc chương trình.")
+    else:
+        print("Lựa chọn không hợp lệ.")
+
+
 # Bài 4: Tạo dãy C từ A và B
-def create_sequence_C(A, B):
+def tao_day_so_C(A, B):
     try:
         if not (isinstance(A, list) and isinstance(B, list)):
             raise ValueError("Lỗi: A và B phải là danh sách (list) các số tự nhiên.")
@@ -155,126 +248,233 @@ def create_sequence_C(A, B):
         return None
 
 
+def hambai4():
+    try:
+        A = [int(x) for x in input("Nhập dãy số A (cách nhau bằng dấu cách): ").split()]
+        B = [int(x) for x in input("Nhập dãy số B (cách nhau bằng dấu cách): ").split()]
+        C = tao_day_so_C(A, B)
+        if C is not None:
+            print(f"Dãy C: {C}")
+        else:
+            print("Xảy ra lỗi. Vui lòng kiểm tra đầu vào.")
+    except ValueError:
+        print("Lỗi: Vui lòng nhập các số tự nhiên.")
+
+
+def main_bai_4():
+    print("Chào mừng bạn đến với chương trình của tôi!")
+
+    hien_thi_bang_lua_chon()
+
+    choice = int(input("Nhập lựa chọn của bạn: "))
+
+    if choice == 1:
+        hambai4()
+    elif choice == 2:
+        print("Kết thúc chương trình.")
+    else:
+        print("Lựa chọn không hợp lệ.")
+
+
 # Bài 5: Kiểm tra xâu Str2 trong Str1
-def check_string_in_string(Str1, Str2):
+def xu_ly_xau(Str1, Str2, k):
     try:
         if not (isinstance(Str1, str) and isinstance(Str2, str)):
             raise ValueError("Lỗi: Str1 và Str2 phải là xâu ký tự.")
 
-        count = Str1.count(Str2)
-        print(f"Str2 {'có' if count > 0 else 'không có'} trong Str1")
-        print(f"Str2 xuất hiện {count} lần trong Str1")
+        if not isinstance(k, int):
+            raise ValueError("Lỗi: k phải là một số nguyên.")
+
+        if k < 0 or k >= len(Str1):
+            raise ValueError(f"Lỗi: k phải nằm trong khoảng từ 0 đến {len(Str1) - 1}.")
+
+        print(f"a) {'Có' if Str2 in Str1 else 'Không có'} xâu Str2 trong xâu Str1")
+
+        if Str2 in Str1:
+            index = Str1.find(Str2)
+            print(f"b) Xâu Str2 xuất hiện lần đầu tiên tại vị trí: {index}")
+
+        new_str = Str1[:k] + Str2 + Str1[k:]
+        print(f"c) Kết quả sau khi chèn xâu Str2 vào vị trí {k} trong xâu Str1: {new_str}")
 
     except ValueError as ve:
         print(ve)
 
 
+def hambai5():
+    try:
+        Str1 = input("Nhập xâu Str1: ")
+        Str2 = input("Nhập xâu Str2: ")
+        k = int(input(f"Nhập số k (0 <= k < {len(Str1)}): "))
+        xu_ly_xau(Str1, Str2, k)
+    except ValueError as ve:
+        print(f"Lỗi: {ve}")
+    except Exception as e:
+        print(f"Lỗi không xác định: {e}")
+
+
+def main_bai_5():
+    print("Chào mừng bạn đến với chương trình của tôi!")
+
+    hien_thi_bang_lua_chon()
+
+    choice = int(input("Nhập lựa chọn của bạn: "))
+
+    if choice == 1:
+        hambai5()
+    elif choice == 2:
+        print("Kết thúc chương trình.")
+    else:
+        print("Lựa chọn không hợp lệ.")
+
+
 # Bài 6: Tạo tập hợp A, B, C
-def create_sets():
+def sinh_tap_hop():
     try:
         A = set(random.sample(range(1, 1000), 100))
-        B = set(random.sample(A, 20))
-        C = set(random.sample(B, 10))
+        B = set(random.sample(list(A), 20))
+        C = set(random.sample(list(B), 10))
         return A, B, C
     except ValueError as ve:
         print(f"Lỗi: {ve}")
         return set(), set(), set()
 
 
-# Bài 7: Xử lý từ điển A
-def process_dictionary(A):
+def hambai6():
     try:
-        max_value = max(A.values())
-        max_subjects = [subject for subject, score in A.items() if score == max_value]
-        even_scores = {subject: score for subject, score in A.items() if score % 2 == 0}
-        avg_score = sum(A.values()) / len(A)
-        new_dict = {subject: score for subject, score in A.items() if score > 7}
-        reversed_dict = {v: k for k, v in A.items()}
-        return max_value, max_subjects, even_scores, avg_score, new_dict, reversed_dict
+        tap_hop_A, tap_hop_B, tap_hop_C = sinh_tap_hop()
+        print(f"a) Tập hợp A: {tap_hop_A}")
+        print(f"b) Tập hợp B: {tap_hop_B}")
+        print(f"c) Tập hợp C: {tap_hop_C}")
+    except Exception as e:
+        print(f"Lỗi không xác định: {e}")
+
+
+def main_bai_6():
+    print("Chào mừng bạn đến với chương trình của tôi!")
+
+    hien_thi_bang_lua_chon()
+
+    choice = int(input("Nhập lựa chọn của bạn: "))
+
+    if choice == 1:
+        hambai6()
+    elif choice == 2:
+        print("Kết thúc chương trình.")
+    else:
+        print("Lựa chọn không hợp lệ.")
+
+
+# Bài 7: Xử lý từ điển A
+def xu_ly_tu_dien(A):
+    try:
+        diem_lon_nhat = max(A.values())
+        mon_diem_lon_nhat = [(mon, diem) for mon, diem in A.items() if diem == diem_lon_nhat]
+        diem_chan = {mon: diem for mon, diem in A.items() if diem % 2 == 0}
+        diem_trung_binh = sum(A.values()) / len(A)
+        tu_dien_moi = {mon: diem for mon, diem in A.items() if diem > 7}
+        tu_dien_nguoc = {diem: mon for mon, diem in A.items()}
+
+        return diem_lon_nhat, mon_diem_lon_nhat, diem_chan, diem_trung_binh, tu_dien_moi, tu_dien_nguoc
     except Exception as e:
         print(f"Lỗi không xác định trong quá trình xử lý từ điển: {e}")
         return None, None, None, None, None, None
 
 
-# Bài 8: Module và Package
-# Module student_math.py:
-
-
-def addition(a, b):
-    return a + b
-
-
-def multiplication(a, b):
-    return a * b
-
-
-def power(a, b):
-    return a ** b
-
-
-def square_root(a):
+def hambai7():
     try:
-        return math.sqrt(a)
-    except ValueError as ve:
-        print(f"Lỗi khi tính căn bậc 2: {ve}")
-        return None
+        A = {"Toán": 9, "Văn": 5, "Sử": 8, "Địa": 7}
+        diem_lon_nhat, mon_diem_lon_nhat, diem_chan, diem_trung_binh, tu_dien_moi, tu_dien_nguoc = xu_ly_tu_dien(A)
 
+        if diem_lon_nhat is not None:
+            # Tổ chức dữ liệu thành danh sách 2 chiều
+            bang_ket_qua = [
+                ["Điểm lớn nhất", "Môn và điểm lớn nhất", "Điểm số chẵn", "Trung bình điểm", "Từ điển mới",
+                 "Đảo ngược từ điển"],
+                [diem_lon_nhat, mon_diem_lon_nhat, diem_chan, diem_trung_binh, tu_dien_moi, tu_dien_nguoc]
+            ]
 
-def quadratic_eq(a, b, c):
-    try:
-        discriminant = b ** 2 - 4 * a * c
-        if discriminant > 0:
-            x1 = (-b + math.sqrt(discriminant)) / (2 * a)
-            x2 = (-b - math.sqrt(discriminant)) / (2 * a)
-            return x1, x2
-        elif discriminant == 0:
-            x = -b / (2 * a)
-            return x
-        else:
-            return "No real roots"
-    except ValueError as ve:
-        print(f"Lỗi khi giải phương trình bậc 2: {ve}")
-        return None
-
-
-# Main program for Bài 8
-def main_bai_8():
-    a = random.randint(1, 100)
-    b = random.randint(1, 5)
-    c = random.randint(1, 50)
-
-    try:
-        print(f"Tổng: {addition(a, b)}")
-        print(f"Tích: {multiplication(a, b)}")
-        print(f"Mũ: {power(a, b)}")
-        sqrt_result = square_root(a)
-        if sqrt_result is not None:
-            print(f"Căn bậc 2: {sqrt_result}")
-        print(f"Giải phương trình bậc 2: {quadratic_eq(a, b, c)}")
+            # In ra kết quả trong bảng
+            print(tabulate(bang_ket_qua, headers="firstrow", tablefmt="pretty"))
     except Exception as e:
         print(f"Lỗi không xác định: {e}")
 
 
+def main_bai_7():
+    print("Chào mừng bạn đến với chương trình của tôi!")
+
+    hien_thi_bang_lua_chon()
+
+    choice = int(input("Nhập lựa chọn của bạn: "))
+
+    if choice == 1:
+        hambai7()
+    elif choice == 2:
+        print("Kết thúc chương trình.")
+    else:
+        print("Lựa chọn không hợp lệ.")
+
+
+# Bài 8: Module và Package
+
+def hambai8():
+    try:
+        a, b, c = sinh_so_nguyen()
+
+        # Tổ chức dữ liệu thành danh sách 2 chiều
+        bang_ket_qua = [
+            ["Phép toán", "Kết quả"],
+            ["a) Tổng (a + b)", tinh_tong(a, b)],
+            ["b) Tích (a * b)", tinh_tich(a, b)],
+            ["c) Mũ (a ** b)", tinh_mu(a, b)],
+            ["d) Căn bậc 2 (sqrt(a))", tinh_can_bac_hai(a)],
+            ["e) Tan (tan(a))", tinh_tan(a)],
+            ["f) Giải phương trình bậc 2 (ax^2 + bx + c = 0)", giai_ptb2(a, b, c)]
+        ]
+
+        # In ra kết quả trong bảng
+        print(tabulate(bang_ket_qua, headers="firstrow", tablefmt="pretty", colalign=("left", "left")))
+
+    except Exception as e:
+        print(f"Lỗi không xác định: {e}")
+
+
+def main_bai_8():
+    print("Chào mừng bạn đến với chương trình của tôi!")
+
+    hien_thi_bang_lua_chon()
+
+    choice = int(input("Nhập lựa chọn của bạn: "))
+
+    if choice == 1:
+        hambai8()
+    elif choice == 2:
+        print("Kết thúc chương trình.")
+    else:
+        print("Lựa chọn không hợp lệ.")
+
+
 # Bài 9: Đọc và ghi tệp
-def read_write_file():
+def doc_ghi_tep():
     try:
         with open('fin.txt', 'r', encoding='utf-8') as fin:
             n = int(fin.readline().strip())
             data = fin.readlines()
 
         with open('fout.txt', 'w', encoding='utf-8') as fout:
-            total_sum = 0
-            fout.write(str(total_sum) + '\n')
+            tong_tat_ca = 0
+            fout.write(str(tong_tat_ca) + '\n')
             for line in data:
                 try:
-                    numbers = [float(num) for num in line.split()]
-                    sum_numbers = sum(numbers)
-                    total_sum += sum_numbers
-                    fout.write(f"{sum_numbers}\n")
-                    fout.seek(0)
-                    fout.write(str(total_sum))
+                    so = [float(num) for num in line.split()]
+                    tong_so = sum(so)
+                    tong_tat_ca += tong_so
+                    fout.write(f"{tong_so}\n")
                 except ValueError as ve:
                     print(f"Lỗi khi đọc dòng từ tệp fin.txt: {ve}")
+            fout.seek(0)
+            fout.write(str(tong_tat_ca))
+
         print("Ghi tệp fout.txt thành công!")
     except FileNotFoundError:
         print("Không tìm thấy tệp fin.txt.")
@@ -282,8 +482,33 @@ def read_write_file():
         print(f"Lỗi không xác định: {e}")
 
 
+def hien_thi_bang_lua_chon():
+    table = [
+        ["1", "Tiếp tục Chương Trình"],
+        ["2", "Thực hiện chương trình khác"]
+    ]
+    headers = ["Lựa chọn", "Chức năng"]
+
+    print(tabulate(table, headers, tablefmt="fancy_grid"))
+
+
+def main_bai_9():
+    print("Chào mừng bạn đến với chương trình của tôi!")
+
+    hien_thi_bang_lua_chon()
+
+    choice = int(input("Nhập lựa chọn của bạn: "))
+
+    if choice == 1:
+        doc_ghi_tep()
+    elif choice == 2:
+        print("Kết thúc chương trình.")
+    else:
+        print("Lựa chọn không hợp lệ.")
+
+
 # Bài 10: Xử lý ngoại lệ
-def handle_exceptions():
+def xu_ly_ngoai_le():
     try:
         a = int(input("Nhập số nguyên a: "))
         b = int(input("Nhập số nguyên b: "))
@@ -295,6 +520,21 @@ def handle_exceptions():
         print("Lỗi: b không được bằng 0.")
 
 
+def main_bai_10():
+    print("Chào mừng bạn đến với chương trình của tôi!")
+
+    hien_thi_bang_lua_chon()
+
+    choice = int(input("Nhập lựa chọn của bạn: "))
+
+    if choice == 1:
+        xu_ly_ngoai_le()
+    elif choice == 2:
+        print("Kết thúc chương trình.")
+    else:
+        print("Lựa chọn không hợp lệ.")
+
+
 # Bài 11: Lập trình với đối tượng
 class NhanVien:
     def __init__(self, hoten, tuoi, luong):
@@ -303,123 +543,187 @@ class NhanVien:
         self.luong = luong
 
 
-def input_nhanvien_list():
-    nhanvien_list = []
+def nhap_du_lieu_nhan_vien():
+    danh_sach_nhan_vien = []
     try:
-        n = int(input("Nhập số lượng nhân viên: "))
-        if n < 5:
-            raise ValueError("Số lượng nhân viên phải ít nhất là 5.")
-        for i in range(n):
-            hoten = input(f"Nhập tên của nhân viên {i + 1}: ")
+        so_luong_nhan_vien = int(input("Nhập số lượng nhân viên: "))
+        for i in range(so_luong_nhan_vien):
+            hoten = input(f"Nhập họ tên của nhân viên {i + 1}: ")
             tuoi = int(input(f"Nhập tuổi của nhân viên {i + 1}: "))
             luong = float(input(f"Nhập lương của nhân viên {i + 1}: "))
-            nhanvien = NhanVien(hoten, tuoi, luong)
-            nhanvien_list.append(nhanvien)
+            nhan_vien = NhanVien(hoten, tuoi, luong)
+            danh_sach_nhan_vien.append(nhan_vien)
     except ValueError as ve:
-        print(f"Lỗi: {ve}")
-    return nhanvien_list
+        print(f"Lỗi: {ve}. Vui lòng nhập lại thông tin.")
+    return danh_sach_nhan_vien
 
 
-def sort_nhanvien_by_age(nhanvien_list):
+def sap_xep_theo_tuoi_giam_dan(danh_sach_nhan_vien):
+    return sorted(danh_sach_nhan_vien, key=lambda x: x.tuoi, reverse=True)
+
+
+def ghi_danh_sach_nhan_vien_vao_tep_tin(danh_sach_nhan_vien):
     try:
-        sorted_nhanvien_list = sorted(nhanvien_list, key=lambda x: x.tuoi, reverse=True)
-        return sorted_nhanvien_list
-    except Exception as e:
-        print(f"Lỗi khi sắp xếp danh sách: {e}")
-        return []
-
-
-def write_nhanvien_to_file(nhanvien_list):
-    try:
-        with open('NhanVien.txt', 'w') as file:
-            for nhanvien in nhanvien_list:
-                file.write(f"{nhanvien.hoten}, {nhanvien.tuoi}, {nhanvien.luong}\n")
+        with open('NhanVien.txt', 'w', encoding='utf-8') as file:
+            for nhan_vien in danh_sach_nhan_vien:
+                file.write(f"{nhan_vien.hoten}, {nhan_vien.tuoi}, {nhan_vien.luong}\n")
         print("Ghi tệp NhanVien.txt thành công!")
     except Exception as e:
         print(f"Lỗi khi ghi tệp: {e}")
 
 
-def read_nhanvien_from_file():
+def doc_danh_sach_nhan_vien_tu_tep_tin():
+    danh_sach_nhan_vien = []
     try:
-        with open('NhanVien.txt', 'r') as file:
-            lines = file.readlines()
-            for line in lines:
-                data = line.strip().split(',')
-                hoten, tuoi, luong = data
-                print(f"Họ tên: {hoten}, Tuổi: {tuoi}, Lương: {luong}")
+        with open('NhanVien.txt', 'r', encoding='utf-8') as file:
+            for line in file:
+                hoten, tuoi, luong = line.strip().split(', ')
+                nhan_vien = NhanVien(hoten, int(tuoi), float(luong))
+                danh_sach_nhan_vien.append(nhan_vien)
     except FileNotFoundError:
         print("Không tìm thấy tệp NhanVien.txt.")
     except Exception as e:
-        print(f"Lỗi không xác định: {e}")
+        print(f"Lỗi khi đọc tệp: {e}")
+    return danh_sach_nhan_vien
 
 
-# BÀI 12
+def in_danh_sach_nhan_vien(danh_sach_nhan_vien):
+    if not danh_sach_nhan_vien:
+        print("Danh sách nhân viên trống.")
+        return
 
-def generate_vector_x(m):
+    headers = ["Họ Tên", "Tuổi", "Lương"]
+    table_data = [[nv.hoten, nv.tuoi, nv.luong] for nv in danh_sach_nhan_vien]
+    print(tabulate(table_data, headers, tablefmt="fancy_grid"))
+
+
+##### HÀM MAIN BÀI 11 ####
+def hambai11():
     try:
-        x = np.random.randint(-3, 7, m)
-        return x
+        danh_sach_nhan_vien = nhap_du_lieu_nhan_vien()
+        print("\nDanh sách nhân viên sau khi nhập:")
+        in_danh_sach_nhan_vien(danh_sach_nhan_vien)
+
+        danh_sach_nhan_vien_sap_xep = sap_xep_theo_tuoi_giam_dan(danh_sach_nhan_vien)
+        print("\nDanh sách nhân viên sau khi sắp xếp theo tuổi giảm dần:")
+        in_danh_sach_nhan_vien(danh_sach_nhan_vien_sap_xep)
+
+        ghi_danh_sach_nhan_vien_vao_tep_tin(danh_sach_nhan_vien)
+        print("\nDanh sách nhân viên sau khi ghi vào tệp NhanVien.txt:")
+        in_danh_sach_nhan_vien(doc_danh_sach_nhan_vien_tu_tep_tin())
     except Exception as e:
-        print(f"Lỗi khi tạo vecto x: {e}")
-        return None
+        print(f"Lỗi chung: {e}")
 
 
-def generate_matrix_A(m, n):
+def main_bai_11():
+    print("Chào mừng bạn đến với chương trình của tôi!")
+
+    hien_thi_bang_lua_chon()
+
+    choice = int(input("Nhập lựa chọn của bạn: "))
+
+    if choice == 1:
+        hambai11()
+    elif choice == 2:
+        print("Kết thúc chương trình.")
+    else:
+        print("Lựa chọn không hợp lệ.")
+
+
+#####  BÀI 12 ####
+def tao_vecto_x(m):
+    return np.arange(-3, 6)[:m]
+
+
+def tao_ma_tran_A_B(m, n):
+    A = np.random.randint(-10, 11, size=(m, n))
+    B = np.random.randint(-10, 11, size=(n, m))  # Đảo số hàng và số cột của ma trận B
+    return A, B
+
+
+def tao_ma_tran_C(n, m):
+    return np.random.randint(-10, 11, size=(n, m))
+
+
+def tinh_tich_vecto_ma_tran(x, A):
+    return np.dot(x, A)
+
+
+def tinh_tich_hai_ma_tran(A, B):
+    return np.dot(A, B)
+
+
+def tinh_tich_hai_ma_tran_chuyen_vi(C, B):
+    Ct = np.transpose(C)
+    return np.dot(Ct, B)
+
+
+def hambai12():
     try:
-        A = np.random.randint(0, 10, size=(m, n))
-        return A
+        m = int(input("Nhập số phần tử của vecto x và số hàng của ma trận A: "))
+        n = int(input("Nhập số cột của ma trận A và B: "))
+
+        # a) Tạo vecto x
+        x = tao_vecto_x(m)
+
+        # b) Tạo ma trận A và B
+        A, B = tao_ma_tran_A_B(m, n)
+
+        # c) Tạo ma trận C
+        C = tao_ma_tran_C(n, m)
+
+        # In thông tin
+        print("\nVecto x:")
+        print(x)
+
+        print("\nMa trận A:")
+        print(A)
+
+        print("\nMa trận B:")
+        print(B)
+
+        print("\nMa trận C:")
+        print(C)
+
+        # a) Tính tích của vecto x và ma trận A
+        tich_x_A = tinh_tich_vecto_ma_tran(x, A)
+        print("\nTích của vecto x và ma trận A:")
+        print(tich_x_A)
+
+        # b) Tính tích hai ma trận A và B
+        tich_A_B = tinh_tich_hai_ma_tran(A, B)
+        print("\nTích hai ma trận A và B:")
+        print(tich_A_B)
+
+        # c) Tính tích hai ma trận Ct và B
+        tich_Ct_B = tinh_tich_hai_ma_tran_chuyen_vi(C, B)
+        print("\nTích hai ma trận Ct và B:")
+        print(tich_Ct_B)
+
+    except ValueError as ve:
+        print(f"Lỗi chương trình chính: {ve}")
     except Exception as e:
-        print(f"Lỗi khi tạo ma trận A: {e}")
-        return None
+        print(f"Lỗi chương trình chính: {e}")
 
 
-def generate_matrix_B(m, n):
-    try:
-        B = np.random.randint(0, 10, size=(m, n))
-        return B
-    except Exception as e:
-        print(f"Lỗi khi tạo ma trận B: {e}")
-        return None
+##### HÀM MAIN BÀI 12 ####
+def main_bai_12():
+    print("Chào mừng bạn đến với chương trình của tôi!")
+
+    hien_thi_bang_lua_chon()
+
+    choice = int(input("Nhập lựa chọn của bạn: "))
+
+    if choice == 1:
+        hambai12()
+    elif choice == 2:
+        print("Kết thúc chương trình.")
+    else:
+        print("Lựa chọn không hợp lệ.")
 
 
-def generate_matrix_C(n, m):
-    try:
-        C = np.random.randint(0, 10, size=(n, m))
-        return C
-    except Exception as e:
-        print(f"Lỗi khi tạo ma trận C: {e}")
-        return None
-
-
-def multiply_vector_matrix(x, A):
-    try:
-        result = np.dot(x, A)
-        return result
-    except Exception as e:
-        print(f"Lỗi khi tính tích của vecto x và ma trận A: {e}")
-        return None
-
-
-def multiply_matrices(A, B):
-    try:
-        result = np.dot(A, B)
-        return result
-    except Exception as e:
-        print(f"Lỗi khi tính tích hai ma trận: {e}")
-        return None
-
-
-def multiply_transpose_matrix_B(C, B):
-    try:
-        result = np.dot(C.T, B)
-        return result
-    except Exception as e:
-        print(f"Lỗi khi tính tích hai ma trận (chuyển vị C) và B: {e}")
-        return None
-
-
-# Bài 13
-def func_y(x):
+#####  BÀI 13 ####
+def tinh_gia_tri_ham_so(x):
     try:
         y = x ** 4 - 2 * x ** 2 - 3
         return y
@@ -428,15 +732,15 @@ def func_y(x):
         return None
 
 
-def func_derivative_y(x, order=1):
+def tinh_gia_tri_dao_ham(x, bac_dao_ham=1):
     try:
-        if order == 1:
+        if bac_dao_ham == 1:
             y_prime = 4 * x ** 3 - 4 * x
             return y_prime
-        elif order == 2:
+        elif bac_dao_ham == 2:
             y_double_prime = 12 * x ** 2 - 4
             return y_double_prime
-        elif order == 3:
+        elif bac_dao_ham == 3:
             y_triple_prime = 24 * x
             return y_triple_prime
         else:
@@ -446,8 +750,51 @@ def func_derivative_y(x, order=1):
         return None
 
 
-# Bài 14
-def plot_saddle_surface():
+def hambai13():
+    try:
+        x_gia_tri = np.linspace(-10, 10, 1000)
+
+        y_gia_tri = tinh_gia_tri_ham_so(x_gia_tri)
+        y_prime_gia_tri = tinh_gia_tri_dao_ham(x_gia_tri, bac_dao_ham=1)
+        y_double_prime_gia_tri = tinh_gia_tri_dao_ham(x_gia_tri, bac_dao_ham=2)
+        y_triple_prime_gia_tri = tinh_gia_tri_dao_ham(x_gia_tri, bac_dao_ham=3)
+
+        if all(val is not None for val in [y_gia_tri, y_prime_gia_tri, y_double_prime_gia_tri, y_triple_prime_gia_tri]):
+            plt.figure(figsize=(10, 6))
+
+            plt.plot(x_gia_tri, y_gia_tri, label='y = x^4 - 2x^2 - 3')
+            plt.plot(x_gia_tri, y_prime_gia_tri, label="y'")
+            plt.plot(x_gia_tri, y_double_prime_gia_tri, label="y''")
+            plt.plot(x_gia_tri, y_triple_prime_gia_tri, label="y'''")
+
+            plt.title('Đồ thị hàm số và đạo hàm')
+            plt.xlabel('x')
+            plt.ylabel('y')
+            plt.legend()
+            plt.grid(True)
+            plt.show()
+    except Exception as e:
+        print(f"Lỗi chương trình chính: {e}")
+
+
+##### HÀM MAIN BÀI 13 ####
+def main_bai_13():
+    print("Chào mừng bạn đến với chương trình của tôi!")
+
+    hien_thi_bang_lua_chon()
+
+    choice = int(input("Nhập lựa chọn của bạn: "))
+
+    if choice == 1:
+        hambai13()
+    elif choice == 2:
+        print("Kết thúc chương trình.")
+    else:
+        print("Lựa chọn không hợp lệ.")
+
+
+#####  BÀI 14 ####
+def ve_mat_yen_ngua():
     try:
         x = np.linspace(-10, 10, 100)
         y = np.linspace(-10, 10, 100)
@@ -466,7 +813,7 @@ def plot_saddle_surface():
         print(f"Lỗi khi vẽ đồ thị mặt yên ngựa: {e}")
 
 
-def plot_hyperbolic_surface():
+def ve_mat_hyperbolic():
     try:
         x = np.linspace(-10, 10, 100)
         y = np.linspace(-10, 10, 100)
@@ -485,7 +832,7 @@ def plot_hyperbolic_surface():
         print(f"Lỗi khi vẽ đồ thị mặt hyperbolic 1 tầng: {e}")
 
 
-def plot_sphere_surface():
+def ve_mat_cau():
     try:
         phi = np.linspace(0, np.pi, 100)
         theta = np.linspace(0, 2 * np.pi, 100)
@@ -506,231 +853,181 @@ def plot_sphere_surface():
         print(f"Lỗi khi vẽ đồ thị mặt cầu: {e}")
 
 
-# Bài 15
-def solve_linear_system():
+def hambai14():
+    try:
+        ve_mat_yen_ngua()
+        ve_mat_hyperbolic()
+        ve_mat_cau()
+    except Exception as e:
+        print(f"Lỗi chương trình chính: {e}")
+
+
+##### HÀM MAIN BÀI 14 ####
+def main_bai_14():
+    print("Chào mừng bạn đến với chương trình của tôi!")
+
+    hien_thi_bang_lua_chon()
+
+    choice = int(input("Nhập lựa chọn của bạn: "))
+
+    if choice == 1:
+        hambai14()
+    elif choice == 2:
+        print("Kết thúc chương trình.")
+    else:
+        print("Lựa chọn không hợp lệ.")
+
+
+#####  BÀI 15  ####
+
+def giai_he_phuong_trinh_tuyen_tinh():
     try:
         x, y, z = sp.symbols('x y z')
-        eq1 = sp.Eq(2 * x - 5 * y + z, -5)
-        eq2 = sp.Eq(4 * x + 2 * y - 2 * z, 2)
-        eq3 = sp.Eq(x + y - z, 0)
-        solution = sp.solve((eq1, eq2, eq3), (x, y, z))
-        print(f"Giải hệ phương trình: {solution}")
+        pt1 = sp.Eq(2 * x - 5 * y + z, -5)
+        pt2 = sp.Eq(4 * x + 2 * y - 2 * z, 2)
+        pt3 = sp.Eq(x + y - z, 0)
+        ket_qua = sp.solve((pt1, pt2, pt3), (x, y, z))
+        print(f"Giải hệ phương trình: {ket_qua}")
     except Exception as e:
         print(f"Lỗi khi giải hệ phương trình: {e}")
 
 
-def calculate_limit():
+def tinh_gioi_han():
     try:
         x = sp.symbols('x')
         f = ((x ** 3 - 3 * x ** 2) ** (1 / 3) + (x ** 2 - 2 * x) ** (1 / 2))
-        limit_result = sp.limit(f, x, 5)
-        print(f"Giới hạn của hàm f khi x tiến tới 5: {limit_result}")
+        ket_qua_gioi_han = sp.limit(f, x, 5)
+        print(f"Giới hạn của hàm f khi x tiến tới 5: {ket_qua_gioi_han}")
     except Exception as e:
         print(f"Lỗi khi tính giới hạn: {e}")
 
 
-def calculate_derivative():
+def tinh_dao_ham():
     try:
         x = sp.symbols('x')
         f = (2 * x - 1) / (x + 2)
-        derivative = sp.diff(f, x)
-        print(f"Đạo hàm của hàm f: {derivative}")
+        dao_ham = sp.diff(f, x)
+        print(f"Đạo hàm của hàm f: {dao_ham}")
     except Exception as e:
         print(f"Lỗi khi tính đạo hàm: {e}")
 
 
-def calculate_indefinite_integral():
+def tinh_nguyen_ham_vo_han():
     try:
         x = sp.symbols('x')
         f = x / (x ** 2 + 1)
-        indefinite_integral = sp.integrate(f, x)
-        print(f"Nguyên hàm của hàm f: {indefinite_integral}")
+        nguyen_ham_vo_han = sp.integrate(f, x)
+        print(f"Nguyên hàm của hàm f: {nguyen_ham_vo_han}")
     except Exception as e:
         print(f"Lỗi khi tính nguyên hàm: {e}")
 
 
-def calculate_definite_integral():
+def tinh_tich_phan_xac_dinh():
     try:
         x = sp.symbols('x')
         f = (1 - x * sp.tan(x)) / (x ** 2 * sp.cos(x) + x)
-        definite_integral = sp.integrate(f, (x, 0, 2 * sp.pi / 3))
-        print(f"Tích phân của hàm f từ 0 đến 2pi/3: {definite_integral}")
+        tich_phan_xac_dinh = sp.integrate(f, (x, 0, 2 * sp.pi / 3))
+        print(f"Tích phân của hàm f từ 0 đến 2pi/3: {tich_phan_xac_dinh}")
     except Exception as e:
         print(f"Lỗi khi tính tích phân: {e}")
+
+
+def hambai15():
+    try:
+        giai_he_phuong_trinh_tuyen_tinh()
+        tinh_gioi_han()
+        tinh_dao_ham()
+        tinh_nguyen_ham_vo_han()
+        tinh_tich_phan_xac_dinh()
+    except Exception as e:
+        print(f"Lỗi chương trình chính: {e}")
+
+
+##### HÀM MAIN BÀI 15 M ####
+
+def main_bai_15():
+    print("Chào mừng bạn đến với chương trình của tôi!")
+
+    hien_thi_bang_lua_chon()
+
+    choice = int(input("Nhập lựa chọn của bạn: "))
+
+    if choice == 1:
+        hambai15()
+    elif choice == 2:
+        print("Kết thúc chương trình.")
+    else:
+        print("Lựa chọn không hợp lệ.")
+        #####MENU CHÍNH ####
+
+
+def print_menu():
+    menu = [
+        ["1", "Viết chương trình chuyển đổi nhiệt độ"],
+        ["2", "Tính tổng số nguyên tố, tổng ước số, tổng số chẵn"],
+        ["3", "Xử lý hàm số"],
+        ["4", "Tạo dãy số và ước số chung lớn nhất"],
+        ["5", "Kiểm tra xâu và chèn xâu vào xâu khác"],
+        ["6", "Sinh tập hợp ngẫu nhiên"],
+        ["7", "Xử lý từ điển"],
+        ["8", "Sử dụng module và phép toán cơ bản"],
+        ["9", "Đọc và ghi tệp"],
+        ["10", "Xử lý ngoại lệ"],
+        ["11", "Xử lý đối tượng"],
+        ["12", "Sử dụng thư viện NumPy"],
+        ["13", "Vẽ đồ thị đạo hàm"],
+        ["14", "Vẽ các hình không gian"],
+        ["15", "Sử dụng thư viện SymPy"],
+        ["0", "Thoát chương trình"]
+    ]
+    print(tabulate(menu, headers=["Chọn", "Bài tập"], tablefmt="pretty", colalign=("left", "left")))
 
 
 # Chương trình chính
 def main():
     while True:
         try:
-            print("_______________________________________________________|")
-            print("|                      MENU BÀI TẬP                    |")
-            print("|______________________________________________________|")
-            print("|1.  Viết chương trình chuyển đổi nhiệt độ             |")
-            print("|2.  Tính tổng số nguyên tố, tổng ước số, tổng số chẵn |")
-            print("|3.  Xử lý hàm số                                      |")
-            print("|4.  Tạo dãy số và ước số chung lớn nhất               |")
-            print("|5.  Kiểm tra xâu và chèn xâu vào xâu khác             |")
-            print("|6.  Sinh tập hợp ngẫu nhiên                           |")
-            print("|7.  Xử lý từ điển                                     |")
-            print("|8.  Sử dụng module và phép toán cơ bản                |")
-            print("|9.  Đọc và ghi tệp                                    |")
-            print("|10. Xử lý ngoại lệ                                    |")
-            print("|11. Xử lý đối tượng                                   |")
-            print("|12. Sử dụng thư viện NumPy                            |")
-            print("|13. Vẽ đồ thị đạo hàm                                 |")
-            print("|14. Vẽ các hình không gian                            |")
-            print("|15. Sử dụng thư viện SymPy                            |")
-            print("|______________________________________________________|")
-            print("|0.  Thoát chương trình                                |")
-            print("|______________________________________________________|")
+            print_menu()
             choice = int(input("Chọn bài tập (0-15):"))
             if choice == 0:
                 print("Kết thúc chương trình.")
                 break
             elif choice == 1:
-                celsius_to_fahrenheit()
+                main_bai_1()
             elif choice == 2:
-                while True:
-                    try:
-                        n = int(input("Nhập một số tự nhiên n (50 <= n <= 150): "))
-                        if 50 <= n <= 150:
-                            prime_sum, divisor_sum, even_sum_for, even_sum_while = calculate_values_for_n(n)
-                            print(f"Tổng số nguyên tố nhỏ hơn {n}: {prime_sum}")
-                            print(f"Tổng các ước số của {n}: {divisor_sum}")
-                            print(f"Tổng số chẵn từ 1 đến {n} (sử dụng vòng lặp for): {even_sum_for}")
-                            print(f"Tổng số chẵn từ 1 đến {n} (sử dụng vòng lặp while): {even_sum_while}")
-                            break  # Thoát khỏi vòng lặp khi đã nhập đúng
-                        else:
-                            print("Số n không nằm trong khoảng [50, 150].")
-                    except ValueError:
-                        print("Lỗi: Vui lòng nhập một số tự nhiên.")
+                main_bai_2()
             elif choice == 3:
                 main_bai_3()
             elif choice == 4:
-                try:
-                    A = [int(x) for x in input("Nhập dãy số A (cách nhau bằng dấu cách): ").split()]
-                    B = [int(x) for x in input("Nhập dãy số B (cách nhau bằng dấu cách): ").split()]
-                    C = create_sequence_C(A, B)
-                    if C is not None:
-                        print(f"Dãy C: {C}")
-                    else:
-                        print("Xảy ra lỗi. Vui lòng kiểm tra đầu vào.")
-                except ValueError:
-                    print("Lỗi: Vui lòng nhập các số tự nhiên.")
+                main_bai_4()
             elif choice == 5:
-                try:
-                    Str1 = input("Nhập xâu Str1: ")
-                    Str2 = input("Nhập xâu Str2: ")
-                    check_string_in_string(Str1, Str2)
-                except Exception as e:
-                    print(f"Lỗi không xác định: {e}")
+                main_bai_5()
             elif choice == 6:
-                try:
-                    A, B, C = create_sets()
-                    print(f"Tập hợp A: {A}")
-                    print(f"Tập hợp B: {B}")
-                    print(f"Tập hợp C: {C}")
-                except Exception as e:
-                    print(f"Lỗi không xác định: {e}")
+                main_bai_6()
             elif choice == 7:
-                A = {"Toan": 9, "Van": 5, "Su": 8, "Dia": 7, "Hoa": 6}
-                max_value, max_subjects, even_scores, avg_score, new_dict, reversed_dict = process_dictionary(A)
-                if max_value is not None:
-                    print(f"Điểm lớn nhất: {max_value}")
-                    print(f"Môn và điểm có điểm lớn nhất: {max_subjects}")
-                    print(f"Các điểm số chẵn: {even_scores}")
-                    print(f"Trung bình tất cả các điểm: {avg_score}")
-                    print(f"Từ điển mới với các môn lớn hơn 7 điểm: {new_dict}")
-                    print(f"Đảo ngược từ điển A: {reversed_dict}")
+                main_bai_7()
             elif choice == 8:
                 main_bai_8()
             elif choice == 9:
-                read_write_file()
+                main_bai_9()
             elif choice == 10:
-                handle_exceptions()
+                main_bai_10()
             elif choice == 11:
-                try:
-                    nhanvien_list = input_nhanvien_list()
-                    sorted_nhanvien_list = sort_nhanvien_by_age(nhanvien_list)
-                    write_nhanvien_to_file(sorted_nhanvien_list)
-                    read_nhanvien_from_file()
-                except Exception as e:
-                    print(f"Lỗi chương trình chính: {e}")
+                main_bai_11()
             elif choice == 12:
-                try:
-                    m = 3
-                    n = 4
-
-                    x = generate_vector_x(m)
-                    A = generate_matrix_A(m, n)
-                    B = generate_matrix_B(m, n)
-                    C = generate_matrix_C(n, m)
-
-                    if x is not None and A is not None and B is not None and C is not None:
-                        print(f"Vecto x: {x}")
-                        print(f"Ma trận A:\n{A}")
-                        print(f"Ma trận B:\n{B}")
-                        print(f"Ma trận C:\n{C}")
-
-                        result_x_A = multiply_vector_matrix(x, A)
-                        result_A_B = multiply_matrices(A, B)
-                        result_Ct_B = multiply_transpose_matrix_B(C, B)
-
-                        print(f"Tích của vecto x và ma trận A:\n{result_x_A}")
-                        print(f"Tích hai ma trận A và B:\n{result_A_B}")
-                        print(f"Tích hai ma trận (chuyển vị C) và B:\n{result_Ct_B}")
-                except Exception as e:
-                    print(f"Lỗi chương trình chính: {e}")
+                main_bai_12()
             elif choice == 13:
-                try:
-                    x_values = np.linspace(-10, 10, 1000)
-
-                    y_values = func_y(x_values)
-                    y_prime_values = func_derivative_y(x_values, order=1)
-                    y_double_prime_values = func_derivative_y(x_values, order=2)
-                    y_triple_prime_values = func_derivative_y(x_values, order=3)
-
-                    if y_values is not None and y_prime_values is not None and y_double_prime_values is not None and y_triple_prime_values is not None:
-                        plt.figure(figsize=(10, 6))
-
-                        plt.plot(x_values, y_values, label='y = x^4 - 2x^2 - 3')
-                        plt.plot(x_values, y_prime_values, label="y'")
-                        plt.plot(x_values, y_double_prime_values, label="y''")
-                        plt.plot(x_values, y_triple_prime_values, label="y'''")
-
-                        plt.title('Đồ thị hàm số và đạo hàm')
-                        plt.xlabel('x')
-                        plt.ylabel('y')
-                        plt.legend()
-                        plt.grid(True)
-                        plt.show()
-                except Exception as e:
-                    print(f"Lỗi chương trình chính: {e}")
-
+                main_bai_13()
             elif choice == 14:
-                try:
-                    plot_saddle_surface()
-                    plot_hyperbolic_surface()
-                    plot_sphere_surface()
-                except Exception as e:
-                    print(f"Lỗi chương trình chính: {e}")
+                main_bai_14()
             elif choice == 15:
-                try:
-                    solve_linear_system()
-                    calculate_limit()
-                    calculate_derivative()
-                    calculate_indefinite_integral()
-                    calculate_definite_integral()
-                except Exception as e:
-                    print(f"Lỗi chương trình chính: {e}")
+                hambai15()
             else:
                 print("Lựa chọn không hợp lệ. Vui lòng chọn lại.")
         except ValueError:
             print("Lỗi: Vui lòng nhập một số tự nhiên.")
         except Exception as e:
             print(f"Lỗi không xác định: {e}")
-
         try:
             input("Nhấn Enter để tiếp tục...")
         except KeyboardInterrupt:
