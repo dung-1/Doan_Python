@@ -3,24 +3,25 @@ import matplotlib.pyplot as plt
 import sympy as sp
 from tabulate import tabulate
 from sinhvien import *
+from NhanVien import NhanVien
 
 
 # Bài 1: Chuyển đổi nhiệt độ từ Celsius sang Fahrenheit
 
 
 def chuyen_do_Celsius_sang_Fahrenheit():
-    try:
-        do_Celsius = float(input("Nhập nhiệt độ Celsius: "))
-        do_Fahrenheit = do_Celsius * 9 / 5 + 32
-        # Tạo bảng kết quả
-        bang_ket_qua = [["Nhiệt độ Celsius", "Nhiệt độ Fahrenheit"],
-                        [do_Celsius, do_Fahrenheit]]
-
-        # In ra kết quả trong bảng
-        print(tabulate(bang_ket_qua, headers="firstrow", tablefmt="pretty"))
-
-    except ValueError:
-        print("Lỗi: Vui lòng nhập một số hợp lệ.")
+    while True:
+        try:
+            do_Celsius = float(input("Nhập nhiệt độ Celsius: "))
+            do_Fahrenheit = do_Celsius * 9 / 5 + 32
+            # Tạo bảng kết quả
+            bang_ket_qua = [["Nhiệt độ Celsius", "Nhiệt độ Fahrenheit"],
+                            [do_Celsius, do_Fahrenheit]]
+            # In ra kết quả trong bảng
+            print(tabulate(bang_ket_qua, headers="firstrow", tablefmt="pretty"))
+            break
+        except ValueError:
+            print("Lỗi: Vui lòng nhập một số hợp lệ.")
 
 
 def main_bai_1():
@@ -198,22 +199,24 @@ def tong_uoc_so(n):
 
 
 def hambai3():
-    try:
-        n = int(input("Nhập một số tự nhiên n (50 <= n <= 150): "))
-        if 50 <= n <= 150:
-            # Tạo bảng kết quả
-            bang_ket_qua = [
-                ["Số các ước số thực sự", f"{n} {'là' if la_so_nguyen_to(n) else 'không phải'} số nguyên tố",
-                 "Số ước số lẻ", "Số nguyên tố nhỏ hơn n", "Tổng ước số thực sự"],
-                [dem_uoc_so(n), la_so_nguyen_to(n), dem_uoc_le(n), dem_so_nguyen_to_duoi_n(n), tong_uoc_so(n)]
-            ]
+    while True:
+        try:
+            n = int(input("Nhập một số tự nhiên n (50 <= n <= 150): "))
+            if 50 <= n <= 150:
+                # Tạo bảng kết quả
+                bang_ket_qua = [
+                    ["Số các ước số thực sự", f"{n} {'là' if la_so_nguyen_to(n) else 'không phải'} số nguyên tố",
+                     "Số ước số lẻ", "Số nguyên tố nhỏ hơn n", "Tổng ước số thực sự"],
+                    [dem_uoc_so(n), la_so_nguyen_to(n), dem_uoc_le(n), dem_so_nguyen_to_duoi_n(n), tong_uoc_so(n)]
+                ]
 
-            # In ra kết quả trong bảng
-            print(tabulate(bang_ket_qua, headers="firstrow", tablefmt="pretty"))
-        else:
-            print("Số n không nằm trong khoảng [50, 150]")
-    except ValueError as ve:
-        print(f"Lỗi: {ve}")
+                # In ra kết quả trong bảng
+                print(tabulate(bang_ket_qua, headers="firstrow", tablefmt="pretty"))
+                break
+            else:
+                print("Số n không nằm trong khoảng [50, 150]")
+        except ValueError as ve:
+            print(f"Lỗi: {ve}")
 
 
 def main_bai_3():
@@ -249,16 +252,18 @@ def tao_day_so_C(A, B):
 
 
 def hambai4():
-    try:
-        A = [int(x) for x in input("Nhập dãy số A (cách nhau bằng dấu cách): ").split()]
-        B = [int(x) for x in input("Nhập dãy số B (cách nhau bằng dấu cách): ").split()]
-        C = tao_day_so_C(A, B)
-        if C is not None:
-            print(f"Dãy C: {C}")
-        else:
-            print("Xảy ra lỗi. Vui lòng kiểm tra đầu vào.")
-    except ValueError:
-        print("Lỗi: Vui lòng nhập các số tự nhiên.")
+    while True:
+        try:
+            A = [int(x) for x in input("Nhập dãy số A (cách nhau bằng dấu cách): ").split()]
+            B = [int(x) for x in input("Nhập dãy số B (cách nhau bằng dấu cách): ").split()]
+            C = tao_day_so_C(A, B)
+            if C is not None:
+                print(f"Dãy C: {C}")
+                break
+            else:
+                print("Xảy ra lỗi. Vui lòng kiểm tra đầu vào.")
+        except ValueError:
+            print("Lỗi: Vui lòng nhập các số tự nhiên.")
 
 
 def main_bai_4():
@@ -278,39 +283,42 @@ def main_bai_4():
 
 # Bài 5: Kiểm tra xâu Str2 trong Str1
 def xu_ly_xau(Str1, Str2, k):
-    try:
-        if not (isinstance(Str1, str) and isinstance(Str2, str)):
-            raise ValueError("Lỗi: Str1 và Str2 phải là xâu ký tự.")
+    while True:
+        try:
+            if not (isinstance(Str1, str) and isinstance(Str2, str)):
+                raise ValueError("Lỗi: Str1 và Str2 phải là xâu ký tự.")
 
-        if not isinstance(k, int):
-            raise ValueError("Lỗi: k phải là một số nguyên.")
+            if not isinstance(k, int):
+                raise ValueError("Lỗi: k phải là một số nguyên.")
 
-        if k < 0 or k >= len(Str1):
-            raise ValueError(f"Lỗi: k phải nằm trong khoảng từ 0 đến {len(Str1) - 1}.")
+            if k < 0 or k >= len(Str1):
+                raise ValueError(f"Lỗi: k phải nằm trong khoảng từ 0 đến {len(Str1) - 1}.")
 
-        print(f"a) {'Có' if Str2 in Str1 else 'Không có'} xâu Str2 trong xâu Str1")
+            print(f"a) {'Có' if Str2 in Str1 else 'Không có'} xâu Str2 trong xâu Str1")
 
-        if Str2 in Str1:
-            index = Str1.find(Str2)
-            print(f"b) Xâu Str2 xuất hiện lần đầu tiên tại vị trí: {index}")
+            if Str2 in Str1:
+                index = Str1.find(Str2)
+                print(f"b) Xâu Str2 xuất hiện lần đầu tiên tại vị trí: {index}")
 
-        new_str = Str1[:k] + Str2 + Str1[k:]
-        print(f"c) Kết quả sau khi chèn xâu Str2 vào vị trí {k} trong xâu Str1: {new_str}")
-
-    except ValueError as ve:
-        print(ve)
+            new_str = Str1[:k] + Str2 + Str1[k:]
+            print(f"c) Kết quả sau khi chèn xâu Str2 vào vị trí {k} trong xâu Str1: {new_str}")
+            break
+        except ValueError as ve:
+            print(ve)
 
 
 def hambai5():
-    try:
-        Str1 = input("Nhập xâu Str1: ")
-        Str2 = input("Nhập xâu Str2: ")
-        k = int(input(f"Nhập số k (0 <= k < {len(Str1)}): "))
-        xu_ly_xau(Str1, Str2, k)
-    except ValueError as ve:
-        print(f"Lỗi: {ve}")
-    except Exception as e:
-        print(f"Lỗi không xác định: {e}")
+    while True:
+        try:
+            Str1 = input("Nhập xâu Str1: ")
+            Str2 = input("Nhập xâu Str2: ")
+            k = int(input(f"Nhập số k (0 <= k < {len(Str1)}): "))
+            xu_ly_xau(Str1, Str2, k)
+            break
+        except ValueError as ve:
+            print(f"Lỗi: {ve}")
+        except Exception as e:
+            print(f"Lỗi không xác định: {e}")
 
 
 def main_bai_5():
@@ -509,15 +517,17 @@ def main_bai_9():
 
 # Bài 10: Xử lý ngoại lệ
 def xu_ly_ngoai_le():
-    try:
-        a = int(input("Nhập số nguyên a: "))
-        b = int(input("Nhập số nguyên b: "))
-        result = a / b
-        print(f"{a}/{b} = {result}")
-    except ValueError as ve:
-        print(f"Lỗi: a và b phải là số nguyên. Chi tiết: {ve}")
-    except ZeroDivisionError:
-        print("Lỗi: b không được bằng 0.")
+    while True:
+        try:
+            a = int(input("Nhập số nguyên a: "))
+            b = int(input("Nhập số nguyên b: "))
+            result = a / b
+            print(f"{a}/{b} = {result}")
+            break
+        except ValueError as ve:
+            print(f"Lỗi: a và b phải là số nguyên. Chi tiết: {ve}")
+        except ZeroDivisionError:
+            print("Lỗi: b không được bằng 0.")
 
 
 def main_bai_10():
@@ -536,25 +546,22 @@ def main_bai_10():
 
 
 # Bài 11: Lập trình với đối tượng
-class NhanVien:
-    def __init__(self, hoten, tuoi, luong):
-        self.hoten = hoten
-        self.tuoi = tuoi
-        self.luong = luong
 
 
 def nhap_du_lieu_nhan_vien():
     danh_sach_nhan_vien = []
-    try:
-        so_luong_nhan_vien = int(input("Nhập số lượng nhân viên: "))
-        for i in range(so_luong_nhan_vien):
-            hoten = input(f"Nhập họ tên của nhân viên {i + 1}: ")
-            tuoi = int(input(f"Nhập tuổi của nhân viên {i + 1}: "))
-            luong = float(input(f"Nhập lương của nhân viên {i + 1}: "))
-            nhan_vien = NhanVien(hoten, tuoi, luong)
-            danh_sach_nhan_vien.append(nhan_vien)
-    except ValueError as ve:
-        print(f"Lỗi: {ve}. Vui lòng nhập lại thông tin.")
+    while True:
+        try:
+            so_luong_nhan_vien = int(input("Nhập số lượng nhân viên: "))
+            for i in range(so_luong_nhan_vien):
+                hoten = input(f"Nhập họ tên của nhân viên {i + 1}: ")
+                tuoi = int(input(f"Nhập tuổi của nhân viên {i + 1}: "))
+                luong = float(input(f"Nhập lương của nhân viên {i + 1}: "))
+                nhan_vien = NhanVien(hoten, tuoi, luong)
+                danh_sach_nhan_vien.append(nhan_vien)
+                break
+        except ValueError as ve:
+            print(f"Lỗi: {ve}. Vui lòng nhập lại thông tin.")
     return danh_sach_nhan_vien
 
 
@@ -659,51 +666,52 @@ def tinh_tich_hai_ma_tran_chuyen_vi(C, B):
 
 
 def hambai12():
-    try:
-        m = int(input("Nhập số phần tử của vecto x và số hàng của ma trận A: "))
-        n = int(input("Nhập số cột của ma trận A và B: "))
+    while True:
+        try:
+            m = int(input("Nhập số phần tử của vecto x và số hàng của ma trận A: "))
+            n = int(input("Nhập số cột của ma trận A và B: "))
 
-        # a) Tạo vecto x
-        x = tao_vecto_x(m)
+            # a) Tạo vecto x
+            x = tao_vecto_x(m)
 
-        # b) Tạo ma trận A và B
-        A, B = tao_ma_tran_A_B(m, n)
+            # b) Tạo ma trận A và B
+            A, B = tao_ma_tran_A_B(m, n)
 
-        # c) Tạo ma trận C
-        C = tao_ma_tran_C(n, m)
+            # c) Tạo ma trận C
+            C = tao_ma_tran_C(n, m)
 
-        # In thông tin
-        print("\nVecto x:")
-        print(x)
+            # In thông tin
+            print("\nVecto x:")
+            print(x)
 
-        print("\nMa trận A:")
-        print(A)
+            print("\nMa trận A:")
+            print(A)
 
-        print("\nMa trận B:")
-        print(B)
+            print("\nMa trận B:")
+            print(B)
 
-        print("\nMa trận C:")
-        print(C)
+            print("\nMa trận C:")
+            print(C)
 
-        # a) Tính tích của vecto x và ma trận A
-        tich_x_A = tinh_tich_vecto_ma_tran(x, A)
-        print("\nTích của vecto x và ma trận A:")
-        print(tich_x_A)
+            # a) Tính tích của vecto x và ma trận A
+            tich_x_A = tinh_tich_vecto_ma_tran(x, A)
+            print("\nTích của vecto x và ma trận A:")
+            print(tich_x_A)
 
-        # b) Tính tích hai ma trận A và B
-        tich_A_B = tinh_tich_hai_ma_tran(A, B)
-        print("\nTích hai ma trận A và B:")
-        print(tich_A_B)
+            # b) Tính tích hai ma trận A và B
+            tich_A_B = tinh_tich_hai_ma_tran(A, B)
+            print("\nTích hai ma trận A và B:")
+            print(tich_A_B)
 
-        # c) Tính tích hai ma trận Ct và B
-        tich_Ct_B = tinh_tich_hai_ma_tran_chuyen_vi(C, B)
-        print("\nTích hai ma trận Ct và B:")
-        print(tich_Ct_B)
-
-    except ValueError as ve:
-        print(f"Lỗi chương trình chính: {ve}")
-    except Exception as e:
-        print(f"Lỗi chương trình chính: {e}")
+            # c) Tính tích hai ma trận Ct và B
+            tich_Ct_B = tinh_tich_hai_ma_tran_chuyen_vi(C, B)
+            print("\nTích hai ma trận Ct và B:")
+            print(tich_Ct_B)
+            break
+        except ValueError as ve:
+            print(f"Lỗi chương trình chính: {ve}")
+        except Exception as e:
+            print(f"Lỗi chương trình chính: {e}")
 
 
 ##### HÀM MAIN BÀI 12 ####
@@ -943,7 +951,7 @@ def hambai15():
         print(f"Lỗi chương trình chính: {e}")
 
 
-##### HÀM MAIN BÀI 15 M ####
+##### HÀM MAIN BÀI 15  ####
 
 def main_bai_15():
     print("Chào mừng bạn đến với chương trình của tôi!")
