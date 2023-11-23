@@ -40,15 +40,6 @@ def main_bai_1():
 
 
 # Bài 2: Tính tổng số nguyên tố, tổng ước số, và tổng số chẵn
-def la_so_nguyen_to(x):
-    if x < 2:
-        return False
-    for i in range(2, int(x ** 0.5) + 1):
-        if x % i == 0:
-            return False
-    return True
-
-
 def tong_so_nguyen_to_nho_hon_n(n):
     so_nguyen_to_nho_hon_n = [i for i in range(2, n) if la_so_nguyen_to(i)]
     return sum(so_nguyen_to_nho_hon_n)
@@ -811,7 +802,8 @@ def ve_mat_yen_ngua():
 
         fig = plt.figure()
         ax = fig.add_subplot(111, projection='3d')
-        ax.plot_surface(x, y, z, cmap='viridis')
+        ax.plot_surface(x, y, z, cmap='plasma', color='purple', alpha=0.8)  # Thay đổi màu sắc ở đây
+
         ax.set_title('Đồ thị mặt yên ngựa')
         ax.set_xlabel('X')
         ax.set_ylabel('Y')
@@ -821,23 +813,32 @@ def ve_mat_yen_ngua():
         print(f"Lỗi khi vẽ đồ thị mặt yên ngựa: {e}")
 
 
+
 def ve_mat_hyperbolic():
     try:
-        x = np.linspace(-10, 10, 100)
-        y = np.linspace(-10, 10, 100)
-        x, y = np.meshgrid(x, y)
-        z = (x / 3) ** 2 + (y / 5) ** 2 - (2 / 2) ** 2
-
         fig = plt.figure()
         ax = fig.add_subplot(111, projection='3d')
-        ax.plot_surface(x, y, z, cmap='viridis')
-        ax.set_title('Đồ thị mặt hyperbolic 1 tầng')
-        ax.set_xlabel('X')
-        ax.set_ylabel('Y')
-        ax.set_zlabel('Z')
+
+        u = np.linspace(-3, 3, 100)
+        v = np.linspace(-3, 3, 100)
+        u, v = np.meshgrid(u, v)
+        a = 3
+        b = 5
+        c = 2
+        x = a * np.cosh(u) * np.cos(v)
+        y = b * np.cosh(u) * np.sin(v)
+        z = c * np.sinh(u)
+
+        ax.plot_surface(x, y, z, cmap='plasma', color='purple', alpha=0.8)  # Thay đổi màu sắc ở đây
+
+        ax.set_title("Đồ thị mặt hyperbolic 1 tầng")
+        ax.set_xlabel("X")
+        ax.set_ylabel("Y")
+        ax.set_zlabel("Z")
+
         plt.show()
     except Exception as e:
-        print(f"Lỗi khi vẽ đồ thị mặt hyperbolic 1 tầng: {e}")
+        print(f"Lỗi khi vẽ đồ thị mặt yên ngựa: {e}")
 
 
 def ve_mat_cau():
@@ -851,7 +852,7 @@ def ve_mat_cau():
 
         fig = plt.figure()
         ax = fig.add_subplot(111, projection='3d')
-        ax.plot_surface(x, y, z, cmap='viridis')
+        ax.plot_surface(x, y, z, cmap='plasma', color='purple', alpha=0.8)  # Thay đổi màu sắc ở đây
         ax.set_title('Đồ thị mặt cầu')
         ax.set_xlabel('X')
         ax.set_ylabel('Y')
@@ -967,7 +968,6 @@ def main_bai_15():
     else:
         print("Lựa chọn không hợp lệ.")
         #####MENU CHÍNH ####
-
 
 def print_menu():
     menu = [
